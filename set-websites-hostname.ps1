@@ -36,14 +36,15 @@ if( Test-Path $websiteConfigPath )
         if ( $hostNameAttr -ne $null -and $hostNameAttr.'#text'.Length -gt 0 )
         {
             $siteName = $site.Attributes['name']
+            $finalHostname = $hostname
             if ( $siteName.'#text' -ne "website" )
             {   
                 Write-Host "Adding website name " $site.Attributes['name'].'#text' " to hostname "
-                $hostName = $site.Attributes['name'].'#text' + "." + $hostName
+                $finalHostName = $site.Attributes['name'].'#text' + "." + $hostName
             }
-            Write-Host "Changing hostName and targetHostName from " $hostNameAttr.'#text' " to " $hostName -ForegroundColor Blue
-            $site.SetAttribute('hostName', $hostName)
-            $site.SetAttribute('targetHostName', $hostName)
+            Write-Host "Changing hostName and targetHostName from " $hostNameAttr.'#text' " to " $finalHostName -ForegroundColor Blue
+            $site.SetAttribute('hostName', $finalHostName)
+            $site.SetAttribute('targetHostName', $finalHostName)
         }
     }
 
