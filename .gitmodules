@@ -1,0 +1,6 @@
+[submodule "sitecore-server-configurator"]
+	path = sitecore-server-configurator
+	url = https://github.com/alessandronivuori/ServerConfigurator.git
+[submodule "ServerConfigurator"]
+	path = ServerConfigurator
+	url = https://github.com/DiegoSSJ/ServerConfigurator.git
