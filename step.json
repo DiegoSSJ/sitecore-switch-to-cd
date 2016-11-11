@@ -1,0 +1,34 @@
+{
+  "Id": "ActionTemplates-24",
+  "Name": "Set up as Content Delivery",
+  "Description": "Modifies the Sitecore instance to act as a content delivery instance",
+  "ActionType": "Octopus.Script",
+  "Version": 14,
+  "Properties": {
+    "Octopus.Action.Script.ScriptSource": "Package",
+    "Octopus.Action.RunOnServer": "false",
+    "Octopus.Action.Script.ScriptFileName": "switch-to-cd.ps1",
+    "Octopus.Action.Package.FeedId": "feeds-builtin",
+    "Octopus.Action.Package.PackageId": "sitecore-switch-to-cd",
+    "Octopus.Action.Script.ScriptParameters": "-deploymentPath #{deploymentPath} -hostName #{hostname} -webroot #{webroot}",
+    "Octopus.Action.Script.Syntax": null,
+    "Octopus.Action.Script.ScriptBody": null
+  },
+  "Parameters": [
+    {
+      "Id": "c03d642d-7b5d-4190-be47-8a9247a4beda",
+      "Name": "deploymentPath",
+      "Label": "Deployment Path",
+      "HelpText": "This variable tells us where the Sitecore website has been deployed. We expect three folder in this path:\nDeployment\nUnicorn \nWebsite",
+      "DefaultValue": "C:\\inetpub\\sitecore.liu",
+      "DisplaySettings": {
+        "Octopus.ControlType": "SingleLineText"
+      }
+    }
+  ],
+  "$Meta": {
+    "ExportedAt": "2016-11-11T13:27:26.555Z",
+    "OctopusVersion": "3.4.12",
+    "Type": "ActionTemplate"
+  }
+}
