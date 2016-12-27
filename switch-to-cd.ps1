@@ -8,8 +8,12 @@
     https://doc.sitecore.net/sitecore_experience_platform/81/setting_up__maintaining/xdb/configuring_servers/configure_a_content_delivery_server 
 .PARAMETER deploymentPath
     The path to where the Sitecore instance was deployed. This is the path up the Website or similar
-.PARAMETER deploymentPath
-    The hostName for the site definitions. The site definitions should be in \App_Config\Include\Context\Website.config
+.PARAMETER hostNames
+    The hostNames to replace for the site definitions. This is a key pair array in the form @{"localhostname"="site.com"; "othersitelocal"="othersite.com"}.
+    Set it empty is you want to skip altering hostname attribute for site definitions in CD instances of Sitecore. 
+    The site definitions should be in \App_Config\Include\Context\Website.config
+.PARAMETER targetHostNames
+    Same as hostNames but for targetHostNames. 
 .PARAMETER webroot
     The additional and optional name for the webroot for the instance. Default is Website
 .EXAMPLE
@@ -22,11 +26,13 @@
 
 param(
     [Parameter(Mandatory=$true)]
-    [string]$deploymentPath,      # The path to deployment. We expect three folder there: Unicorn, Webroot and Deployment. Last one isn't used. 
+    [string]$deploymentPath,      # The path to deployment. We expect three folders there: Unicorn, Webroot and Deployment. Last one isn't used. 
     [Parameter(Mandatory=$true)]
-    [string]$hostName,            # The hostname to switch the site definitions to. 
+    [hashtable]$hostNames,            # The hostnames to switch the site definitions to. See help for format and more information.
+    [Parameter(Mandatory=$true)]
+    [hashtable]$targetHostNames,      # Same as hostNames but for the targetHostName attributes of site definitions
     [Parameter(Mandatory=$false)]
-    [string]$webroot="Website")  # The path to the Website
+    [string]$webroot="Website")    # The path to the Website
         
 
 
@@ -102,4 +108,4 @@ else
 }
 
 # Set sites hostnames
-.\set-websites-hostname.ps1 -hostName $hostName -websiteConfigPath $deploymentPath"\"$webroot\App_Config\Include\Context\Website.config
+.\set-websites-hostname.ps1 -hostNames $hostNames -targetHostNames $targetHostNames -websiteConfigPath $deploymentPath"\"$webroot\App_Config\Include\Context\Website.config

@@ -3,14 +3,14 @@
   "Name": "Set up as Content Delivery",
   "Description": "Modifies the Sitecore instance to act as a content delivery instance",
   "ActionType": "Octopus.Script",
-  "Version": 14,
+  "Version": 15,
   "Properties": {
     "Octopus.Action.Script.ScriptSource": "Package",
     "Octopus.Action.RunOnServer": "false",
     "Octopus.Action.Script.ScriptFileName": "switch-to-cd.ps1",
     "Octopus.Action.Package.FeedId": "feeds-builtin",
     "Octopus.Action.Package.PackageId": "sitecore-switch-to-cd",
-    "Octopus.Action.Script.ScriptParameters": "-deploymentPath #{deploymentPath} -hostName #{hostname} -webroot #{webroot}",
+    "Octopus.Action.Script.ScriptParameters": "-deploymentPath #{deploymentPath} -hostNames #{hostNames} -targetHostNames #{targetHostNames} -webroot #{webroot}",
     "Octopus.Action.Script.Syntax": null,
     "Octopus.Action.Script.ScriptBody": null
   },
@@ -24,10 +24,30 @@
       "DisplaySettings": {
         "Octopus.ControlType": "SingleLineText"
       }
+    },
+    {
+      "Id": "db1e08d3-b1ac-422f-be78-505ad2f4cee6",
+      "Name": "hostNames",
+      "Label": "Hostnames",
+      "HelpText": "The Powershell hashtable array of hostnames to replace in the site definitions. \nI.e. @{\"localhostname\"=\"site.com\"; \"othersitelocal\"=\"othersite.com\"}",
+      "DefaultValue": null,
+      "DisplaySettings": {
+        "Octopus.ControlType": "SingleLineText"
+      }
+    },
+    {
+      "Id": "85c7cfa7-7b45-40f6-b768-41102237b5fb",
+      "Name": "targetHostNames",
+      "Label": "Targethostnames",
+      "HelpText": "The Powershell hashtable array of targetHostNames to replace in the site definitions. \nI.e. @{\"localhostname\"=\"site.com\"; \"othersitelocal\"=\"othersite.com\"}",
+      "DefaultValue": null,
+      "DisplaySettings": {
+        "Octopus.ControlType": "SingleLineText"
+      }
     }
   ],
   "$Meta": {
-    "ExportedAt": "2016-11-11T13:27:26.555Z",
+    "ExportedAt": "2016-12-23T08:47:20.632Z",
     "OctopusVersion": "3.4.12",
     "Type": "ActionTemplate"
   }

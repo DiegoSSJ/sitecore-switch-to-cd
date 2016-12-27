@@ -11,6 +11,7 @@ It is used in Octopus as a packaged step, but should be possible to use standalo
 The script runs the Sitecore configuration, and aditionally enables the SwitchMasterToWeb.config.example and removes the connection strings not needed in a CD. 
 It erases all files listed in the file \Webroot\Data\FrontToErase.txt
 Enables an additional configuration file at \App_Config\Include\zz\Front.config.disabled
+Changes the hostname and targetHostname according to the parameters. See example above and help for the command. 
 
 
 You can see more information on the script's help 
