@@ -97,15 +97,9 @@ Write-Host 'Enabling SwitchMasterToWeb.config'
 # Rename SwitchMasterToWeb.config.disabled to SwitchMasterToWeb.config
 Rename-Item -Path $deploymentPath"\"$webroot\App_Config\Include\Z.SwitchMasterToWeb\SwitchMasterToWeb.config.example -NewName SwitchMasterToWeb.config
 
-Write-Host 'Enable our own Sitecore patches for fronts'
-if ( Test-Path $deploymentPath"\"$webroot\App_Config\Include\zz\Front.config.disabled )
-{
-    Rename-Item -Path $deploymentPath"\"$webroot\App_Config\Include\zz\Front.config.disabled -NewName Front.config
-}
-else
-{
-    Write-Host "ERROR: Front.config.disabled not found, it won't be enabled"
-}
-
 # Set sites hostnames
 .\set-websites-hostname.ps1 -hostNames $hostNames -targetHostNames $targetHostNames -websiteConfigPath $deploymentPath"\"$webroot\App_Config\Include\Context\Website.config
+
+# Activate .cdonly config files
+Write-Host 'Enabling all .config.cdonly files'
+Get-ChildItem -Path $deploymentpath"\"$webroot\App_Config -Filter "*.config.cdonly" -Recurse -File  | % { ren $_.FullName $_.FullName.TrimEnd(".cdonly") -Verbose }
