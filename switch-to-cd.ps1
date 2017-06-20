@@ -113,15 +113,18 @@ else
 # Enable disable config files as per https://doc.sitecore.net//~/media/2ABDC8F1C30E46B0BACBD9ADF6020197.ashx?la=en
 # Using https://github.com/alessandronivuori/ServerConfigurator
 Write-Host 'Enabling/disabling configuration files for CD'
-ServerConfigurator\install.ps1 $deploymentPath"\"$webroot ContentDelivery -solr 1 -check 0 -version $sitecoreVersionString -ignoreWebsitePrefix 1
+ServerConfigurator\install.ps1 $deploymentPath"\"$webroot ContentDelivery -searchProviderUsed "solr" -check 0 -version $sitecoreVersionString -ignoreWebsitePrefix 1
 
 # Remove unneeded connection strings,  see https://doc.sitecore.net/sitecore_experience_platform/81/setting_up__maintaining/xdb/configuring_servers/database_connection_strings_for_configuring_servers
 Write-Host 'Applying connection strings transforms for CD, transforming '
 .\apply-xdt-transform.ps1 -sourceXMLTransform .\ConnectionStringsCD.config -targetConfigurationFile $deploymentPath"\"$webroot\App_Config\ConnectionStrings.config
 
-Write-Host 'Enabling SwitchMasterToWeb.config'
-# Rename SwitchMasterToWeb.config.disabled to SwitchMasterToWeb.config
-Rename-Item -Path $deploymentPath"\"$webroot\App_Config\Include\Z.SwitchMasterToWeb\SwitchMasterToWeb.config.example -NewName SwitchMasterToWeb.config
+if ( $sitecoreVersionString.Contains("8.1") )
+{
+    Write-Host 'Enabling SwitchMasterToWeb.config'
+    # Rename SwitchMasterToWeb.config.disabled to SwitchMasterToWeb.config
+    Rename-Item -Path $deploymentPath"\"$webroot\App_Config\Include\Z.SwitchMasterToWeb\SwitchMasterToWeb.config.example -NewName SwitchMasterToWeb.config
+}
 
 # Set sites hostnames
 .\set-websites-hostname.ps1 -hostNames $hostNames -targetHostNames $targetHostNames -websiteConfigPath $deploymentPath"\"$webroot\App_Config\Include\Context\Website.config
